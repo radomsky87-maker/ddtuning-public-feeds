@@ -1,0 +1,32 @@
+name: Update public RSS
+on:
+  push:
+    paths: ['build_rss.py', '.github/workflows/rss.yml']
+  workflow_dispatch:
+  schedule:
+    - cron: '7,22,37,52 * * * *'
+permissions:
+  contents: write
+concurrency:
+  group: public-rss
+  cancel-in-progress: false
+jobs:
+  rss:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Generate full-content RSS
+        run: python build_rss.py --output feeds/drukarnia.xml --limit 30
+      - name: Save validated feed
+        run: |
+          git config user.name 'DD Tuning RSS'
+          git config user.email 'rss-bot@users.noreply.github.com'
+          git add feeds/drukarnia.xml
+          if ! git diff --cached --quiet; then
+            git commit -m 'Update public RSS'
+            git push
+          fi
