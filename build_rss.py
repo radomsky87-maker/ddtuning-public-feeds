@@ -121,7 +121,7 @@ def build(source, output, limit):
     entries = sorted({e[0]: e for e in entries}.values(), key=lambda e:e[2], reverse=True)[:limit]
     if not entries:
         raise ValueError('No Ukrainian articles in sitemap')
-    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
+    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
         articles = list(pool.map(article, entries))
     rss = ET.Element('rss', version='2.0')
     channel = ET.SubElement(rss,'channel')
