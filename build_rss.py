@@ -19,12 +19,27 @@ NS = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9',
 CONTENT = 'http://purl.org/rss/1.0/modules/content/'
 ET.register_namespace('content', CONTENT)
 
+class SameHostRedirect(urllib.request.HTTPRedirectHandler):
+    """Follow redirects only within DD Tuning, so the access key never leaves the host."""
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        p = urllib.parse.urlsplit(newurl)
+        if p.scheme != 'https' or p.hostname != HOST:
+            raise ValueError('Unexpected redirect host')
+        return super().redirect_request(req, fp, code, msg, headers, newurl)
+
+OPENER = urllib.request.build_opener(SameHostRedirect)
+
 def fetch(url):
     p = urllib.parse.urlsplit(url)
     if p.scheme != 'https' or p.hostname != HOST:
         raise ValueError('Only HTTPS DD Tuning source URLs are permitted')
-    request = urllib.request.Request(url, headers={'User-Agent': 'DDTuningRSS/1.0'})
-    with urllib.request.urlopen(request, timeout=40) as response:
+    headers = {'User-Agent': 'DDTuningRSS/1.0'}
+    key = os.environ.get('DDTUNING_RSS_KEY', '').strip()
+    if key:
+        # Cloudflare lets the generator through only with this key (rule "Access", 10.11.2026)
+        headers['X-DDTuning-RSS-Key'] = key
+    request = urllib.request.Request(url, headers=headers)
+    with OPENER.open(request, timeout=40) as response:
         if urllib.parse.urlsplit(response.url).hostname != HOST:
             raise ValueError('Unexpected redirect host')
         return response.read().decode('utf-8')

@@ -20,7 +20,14 @@ jobs:
         with:
           python-version: '3.12'
       - name: Generate full-content RSS
-        run: python build_rss.py --output feeds/drukarnia.xml --limit 30
+        env:
+          DDTUNING_RSS_KEY: ${{ secrets.DDTUNING_RSS_KEY }}
+        run: |
+          if [ -z "$DDTUNING_RSS_KEY" ]; then
+            echo '::error::Secret DDTUNING_RSS_KEY is missing: Cloudflare will answer 403 on article pages'
+            exit 1
+          fi
+          python build_rss.py --output feeds/drukarnia.xml --limit 30
       - name: Save validated feed
         run: |
           git config user.name 'DD Tuning RSS'
