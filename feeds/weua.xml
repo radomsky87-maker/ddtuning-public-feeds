@@ -5,8 +5,17 @@
     <link>https://we.ua/4pbu</link>
     <description>Авторські кейси, практичні поради й розбори автоаксесуарів.</description>
     <language>uk</language>
-    <lastBuildDate>Thu, 12 Nov 2026 07:58:37 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 13 Nov 2026 08:00:00 GMT</lastBuildDate>
     <atom:link href="https://raw.githubusercontent.com/radomsky87-maker/ddtuning-public-feeds/main/feeds/weua.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>Як скласти список деталей для повернення авто до штатного вигляду</title>
+      <guid isPermaLink="false">dd-tuning-editorial-2026-11-13</guid>
+      <pubDate>Fri, 13 Nov 2026 08:00:00 GMT</pubDate>
+      <dc:creator>Максим Радомський · DD Tuning</dc:creator>
+      <description>Як підписати пакети зі знятими деталями, зберегти кріплення та знайти потрібні фото перед зворотним монтажем.</description>
+      <content:encoded>&lt;p&gt;Якщо знімаєте декоративну накладку або ручку, підпишіть пакет, поки пам’ятаєте, з якого місця деталь. Запис особливо стане в пригоді, якщо зберігаєте кілька схожих деталей.&lt;/p&gt;&lt;h2&gt;Позначте місце&lt;/h2&gt;&lt;p&gt;Замість «накладка дверей» запишіть «передні ліві двері, внутрішня накладка ручки». Лівий і правий бік позначайте за напрямком руху. Якщо в коробці деталі з різних машин, додайте ідентифікатор автомобіля, який буде зрозумілий вам.&lt;/p&gt;&lt;h2&gt;Зберіть кріплення&lt;/h2&gt;&lt;p&gt;Складіть зняті гвинти й кліпси в окремий підписаний пакет поруч із деталлю. Позначте, чого бракує або що пошкоджено. Перед зворотним монтажем перевірте за інструкцією для конкретного авто, чи можна повторно використати це кріплення.&lt;/p&gt;&lt;h2&gt;Прив’яжіть фото до етикетки&lt;/h2&gt;&lt;p&gt;На одному фото покажіть місце деталі на авто, на другому — її зворотний бік і маркування, якщо воно видиме. Назвіть фото так само, як пакет. Приклад етикетки: «Передні ліві двері · накладка ручки · кріплення в пакеті · одна кліпса тріснула».&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Максим Радомський · DD Tuning&lt;/strong&gt;&lt;/p&gt;</content:encoded>
+      <enclosure url="https://ddtuning.com.ua/theme/logo/logo.png" length="24722" type="image/png"/>
+    </item>
     <item>
       <title>Три точки відліку під час примірки захисного комплекту на Volkswagen T4</title>
       <guid isPermaLink="false">dd-tuning-editorial-2026-11-12</guid>
