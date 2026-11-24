@@ -8,6 +8,8 @@ import html
 from html.parser import HTMLParser
 import os
 from pathlib import Path
+import time
+import urllib.error
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -39,10 +41,19 @@ def fetch(url):
         # Cloudflare lets the generator through only with this key (rule "Access", 10.11.2026)
         headers['X-DDTuning-RSS-Key'] = key
     request = urllib.request.Request(url, headers=headers)
-    with OPENER.open(request, timeout=40) as response:
-        if urllib.parse.urlsplit(response.url).hostname != HOST:
-            raise ValueError('Unexpected redirect host')
-        return response.read().decode('utf-8')
+    for attempt in range(3):
+        try:
+            with OPENER.open(request, timeout=40) as response:
+                if urllib.parse.urlsplit(response.url).hostname != HOST:
+                    raise ValueError('Unexpected redirect host')
+                return response.read().decode('utf-8')
+        except urllib.error.HTTPError as error:
+            if error.code not in (403, 429, 500, 502, 503, 504) or attempt == 2:
+                if error.code == 403:
+                    print('::error::DD Tuning rejected the RSS request (HTTP 403). Check the Cloudflare Access rule, runner network and DDTUNING_RSS_KEY. Existing feed is preserved.')
+                raise
+            print(f'Source returned HTTP {error.code}; retrying request ({attempt + 1}/2)')
+            time.sleep(5 * (attempt + 1))
 
 class Article(HTMLParser):
     allowed = {'p','br','h2','h3','h4','ul','ol','li','strong','b','em','i',
